@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "layer0": "cyberspacenetrunners:block/flowing_data_block"
+    "layer0": "cyberspacenetrunners:block/data_package"
   }
 }

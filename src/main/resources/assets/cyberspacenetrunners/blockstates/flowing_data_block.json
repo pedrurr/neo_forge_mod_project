@@ -1,6 +1,6 @@
 {
   "variants": {
-    "touching_air=false": { "model": "cyberspacenetrunners:block/flowing_data_block", "render_type": "translucent" },
-    "touching_air=true": { "model": "cyberspacenetrunners:block/flowing_data_block", "render_type": "translucent" }
+    "": {
+      "model": "cyberspacenetrunners:block/flowing_data_block"
   }
 }

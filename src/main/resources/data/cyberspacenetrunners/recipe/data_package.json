@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "cyberspacenetrunners:data_chunk"
+    }
+  },
+"pattern": [
+    "BBB",
+    "BBB",
+    "BBB"
+],
+
+  "result": {
+    "count": 1,
+    "id": "cyberspacenetrunners:data_package"
+
+
+  }
+}

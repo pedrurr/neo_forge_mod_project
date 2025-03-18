@@ -1,6 +1,16 @@
 {
   "block.cyberspacenetrunners.flowing_data_block": "Flowing Data",
   "item.cyberspacenetrunners.flowing_data_block": "Flowing Data",
+  "block.cyberspacenetrunners.data_package": "Data Package",
+
+
   "item.cyberspacenetrunners.data_shard": "Data Shard",
-  "itemGroup.cyberspacenetrunners": "Cyberspace Netrunners"
+  "item.cyberspacenetrunners.data_chunk": "Data Chunk",
+
+
+  "creativetab.cyberspacenetrunners.cyber_items": "Cyber Junk",
+  "creativetab.cyberspacenetrunners.cyber_blocks": "Cyber Cubes",
+
+
+  "itemGroup.cyberspacenetrunners": "Cyberspace: Netrunners"
 }

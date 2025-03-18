@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "cyberspacenetrunners:data_package"
+    }
+  ],
+
+  "result": {
+    "count": 9,
+    "id": "cyberspacenetrunners:data_chunk"
+
+
+  }
+}
