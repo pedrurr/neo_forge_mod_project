@@ -1,22 +1,33 @@
-package net.pedrurrr;
+package net.pedrurrr.cyberspacenetrunners;
 
 import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.pedrurrr.cyberspacenetrunners.blocks.FlowingDataBlock;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.world.item.CreativeModeTabs;
+import org.slf4j.Logger;
+import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -29,127 +40,70 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(CyberspaceNetrunners.MODID)
 public class CyberspaceNetrunners {
-    // Define mod id in a common place for everything to reference
+    // Mod ID
     public static final String MODID = "cyberspacenetrunners";
-    // Directly reference a slf4j logger
+
+    // Logger
     private static final Logger LOGGER = LogUtils.getLogger();
-    // Create a Deferred Register to hold Blocks which will all be registered under the "cyberspacenetrunners" namespace
+
+    // Deferred Registers
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
-
-    // Create a Deferred Register to hold Items which will all be registered under the "cyberspacenetrunners" namespace
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
-
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "cyberspacenetrunners" namespace
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    // Example Block and BlockItem
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
+    // Blocks
 
-    // Example Food Item
-    public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem("example_item", new Item.Properties().food(new FoodProperties.Builder()
-            .alwaysEdible().nutrition(1).saturationModifier(2f).build()));
+    public static final DeferredBlock<Block> FLOWING_DATA_BLOCK = BLOCKS.register("flowing_data_block", FlowingDataBlock::new);
 
+    public MyMod() {
+        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
-
-
-    // New Item: Data Shard
-    public static final DeferredItem<Item> DATA_SHARD = ITEMS.registerSimpleItem("data_shard", new Item.Properties().stacksTo(64));
-
-    // Logger statement (place this in a method, e.g., during mod initialization)
-    static {
-        LOGGER.info("REGISTRO DO DATA SHARD");
-    }
+    //public static final DeferredBlock<Block> FLOWING_DATA_BLOCK = BLOCKS.registerSimpleBlock("flowing_data_block",
+            BlockBehaviour.Properties.of()
+                   // .mapColor(MapColor.COLOR_LIGHT_BLUE)
+                   // .sound(SoundType.GLASS)
+                   // .lightLevel(state -> 10) // Emits light
+                   // .noOcclusion() // Allows light to pass through
+                  //  .emissiveRendering((state, world, pos) -> true)); // Makes the texture appear glowing
 
 
-
-
-    // Creates a creative tab with the id "cyberspacenetrunners:example_tab" for the example item, that is placed after the combat tab
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.cyberspacenetrunners")) // The language key for the title of your CreativeModeTab
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab
-                output.accept(DATA_SHARD.get());   // Add the Data Shard to the tab
-            })
-            .build());
+    // Block Items
+    public static final DeferredItem<BlockItem> FLOWING_DATA_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("flowing_data_block", FLOWING_DATA_BLOCK);
 
 
 
+    // Items
+    public static final DeferredItem<Item> DATA_SHARD = ITEMS.registerSimpleItem("data_shard",
+            new Item.Properties().stacksTo(64));
 
-    // The constructor for the mod class is the first code that is run when your mod is loaded.
-    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public CyberspaceNetrunners(IEventBus modEventBus, ModContainer modContainer)
-    {
-        // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+    // Creative Tab
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CYBERSPACE_TAB = CREATIVE_MODE_TABS.register("cyberspace_tab",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.cyberspacenetrunners")) // Tab title
+                    .withTabsBefore(CreativeModeTabs.COMBAT) // Position in the creative menu
+                    .icon(() -> DATA_SHARD.get().getDefaultInstance()) // Tab icon
+                    .displayItems((parameters, output) -> {
+                        output.accept(DATA_SHARD.get()); // Add Data Shard to the tab
+                        output.accept(FLOWING_DATA_BLOCK_ITEM.get()); // Add Flowing Data Block to the tab
+                    })
+                    .build());
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
+    // Constructor
+    public CyberspaceNetrunners(IEventBus modEventBus, ModContainer modContainer) {
+        // Register deferred registers
         BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
-        // Register ourselves for server and other game events we are interested in.
-        // Note that this is necessary if and only if we want *this* class (CyberspaceNetrunners) to respond directly to events.
-        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
-        NeoForge.EVENT_BUS.register(this);
-
-        // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
-
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        // Register event listeners
+        modEventBus.addListener(this::commonSetup);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
-    }
-
-    // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(EXAMPLE_BLOCK_ITEM);
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
-        // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        }
+    // Common setup
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        LOGGER.info("Cyberspace Netrunners mod is initializing!");
     }
 }

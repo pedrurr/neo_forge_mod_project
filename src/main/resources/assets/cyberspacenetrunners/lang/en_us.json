@@ -1,6 +1,6 @@
 {
-  "itemGroup.cyberspacenetrunners": "Example Mod Tab",
-  "block.cyberspacenetrunners.example_block": "Example Block",
-  "item.cyberspacenetrunners.example_item": "Example Item",
-  "item.cyberspacenetrunners.data_shard": "Data Shard"
+  "block.cyberspacenetrunners.flowing_data_block": "Flowing Data",
+  "item.cyberspacenetrunners.flowing_data_block": "Flowing Data",
+  "item.cyberspacenetrunners.data_shard": "Data Shard",
+  "itemGroup.cyberspacenetrunners": "Cyberspace Netrunners"
 }
