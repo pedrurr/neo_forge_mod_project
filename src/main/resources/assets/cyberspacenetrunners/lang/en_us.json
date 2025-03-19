@@ -1,7 +1,6 @@
 {
-  "block.cyberspacenetrunners.flowing_data_block": "Flowing Data",
-  "item.cyberspacenetrunners.flowing_data_block": "Flowing Data",
-  "block.cyberspacenetrunners.data_package": "Data Package",
+  "block.cyberspacenetrunners.flowingdata_block": "Flowing Data",
+  "block.cyberspacenetrunners.datapackage_block": "Data Package",
 
 
   "item.cyberspacenetrunners.data_shard": "Data Shard",

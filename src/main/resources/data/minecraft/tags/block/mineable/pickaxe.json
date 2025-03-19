@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "cyberspacenetrunners:data_package",
-    "cyberspacenetrunners:flowing_data"
+    "cyberspacenetrunners:datapackage_block",
+    "cyberspacenetrunners:flowingdata_block"
   ]
 }

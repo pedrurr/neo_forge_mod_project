@@ -11,13 +11,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "cyberspacenetrunners:data_package"
+          "name": "cyberspacenetrunners:datapackage_block"
         }
       ],
       "rolls": 1.0
     }
   ],
 
-    "random_sequence": "cyberspacenetrunners:blocks/data_package"
+    "random_sequence": "cyberspacenetrunners:blocks/datapackage_block"
 
 }

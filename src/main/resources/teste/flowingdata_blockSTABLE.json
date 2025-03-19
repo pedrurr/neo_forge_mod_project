@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "cyberspacenetrunners:block/flowingdata_block"
+              },
+  "render_type": "translucent"
+}
